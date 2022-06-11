@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/kyanesdev/Descargas/gson-2.6.2.jar",
+        "/home/kyanesdev/facultad IUA/Bases de datos II/2doParcialMariano/JARS/mysql-connector-java-8.0.29.jar"
+    ]
+}
