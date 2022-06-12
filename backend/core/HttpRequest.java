@@ -87,7 +87,7 @@ public class HttpRequest {
                     posicion_parametros = t + 2;
                 }
             }
-            parametros_post = null;
+            parametros_post = "";
             for (int t = posicion_parametros; t < HttpRequest.length; t++) {
                 parametros_post += HttpRequest[t];
             }

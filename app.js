@@ -234,9 +234,25 @@ function registrarSocio(){
         }
     }
 
-    
+    let jsonBody = {
+        "dni": dni.value,
+        "apellido": apellido.value,
+        "actividad" : actividad.value,
+        "dias": dias.value,
+        "costo": costo.value
+    }
 
+    fetch('http://127.0.0.1:8866/ListarPO', {
+        Method: 'POST',
+        Headers: {
+          Accept: 'application.json',
+          'Content-Type': 'application/json'
+        },
+        Body: jsonBody,
+        Cache: 'default'
+      })
 }
+
 function estaRepetido(dni,actividad){
     let socios = JSON.parse(localStorage.getItem('socios'));
     for(let i = 0; i < socios.length; i++){

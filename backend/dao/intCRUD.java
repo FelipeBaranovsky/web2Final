@@ -13,7 +13,7 @@ public interface intCRUD<EntidadDTO> {
 
     public boolean update(EntidadDTO e);
 
-    public EntidadDTO read(Object clave);
+    public EntidadDTO read(EntidadDTO clave);
 
     public List<EntidadDTO> readAll();
 

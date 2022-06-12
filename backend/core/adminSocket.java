@@ -1,5 +1,6 @@
 package core;
 
+import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import static core.Util.Sout;
 import java.io.BufferedOutputStream;
@@ -137,43 +138,76 @@ public class adminSocket extends Thread {
         
         // ANALIZAMOS LAS ACCIONES
         
-        if (hacer.equalsIgnoreCase("Listar")) {
-          Sout("estoy en Listar del Post");
-          clienteDTO cli = new clienteDTO();
-          clienteDAO cdao = new clienteDAO();
-          List<clienteDTO> listadoClientes;
-          listadoClientes = cdao.readAll();
-          clienteDTO cliente = new clienteDTO();
-          Gson gson = new Gson();
-          String listadoJSON = "[";
-
-          for (int t = 0; t < listadoClientes.size(); t++) {
-            cliente = (clienteDTO) listadoClientes.get(t);
+        if (hacer.equalsIgnoreCase("ListarPO")) {
+          /*System.out.println("estoy en Listar del Post");
+            clienteDAO cDAO = new clienteDAO();
+            String params = req.getParametrosPost();
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             
-            listadoJSON += gson.toJson(cliente) + ",";
-          }
-          listadoJSON = listadoJSON.substring(0, listadoJSON.length() - 1);
-          listadoJSON += "]";
-          // resp.enviarRespuestaDatos(200, resp.getInitPage("Hola Mundo !!!"));
-          Sout(gson.toJson((clienteDTO) cli));
-          PaginaInicio = resp.getInitPage(gson.toJson((clienteDTO) cli));
-          resp.imprimirSalida(resp.getHeader());
-          resp.imprimirSalida(listadoJSON);
-        }  // no piden ninguna accion enviamos un archivo, por defecto es index.html
+            // extraer el body del params
+            String test = params.substring(params.indexOf("form-data; name=") + 11, params.length());
+            System.out.println("Test:" + test);
+
+            String test2[] = test.split("name=\"");
+
+            for (int i = 1; i < test2.length; i++) {
+              // quitar el primer " que encuentre
+              test2[i] = test2[i].substring(test2[i].indexOf("\"") + 1);
+              // quitar el guion del final
+              test2[i] = test2[i].substring(0, test2[i].indexOf("-"));
+            }
+
+            clienteDTO cli = new clienteDTO();
+            
+            cli.setDni(test2[1]);
+            cli.setApellido(test2[2]);
+            cli.setActividad(test2[3]);
+            cli.setDias(Integer.parseInt(test2[4]));
+            cli.setCosto(Float.parseFloat(test2[5]));
+
+          System.out.println(cli.toString());
+          cDAO.create(cli);
+        */
+        clienteDTO lib = new clienteDTO();
+        clienteDAO ldao = new clienteDAO();
+        List<clienteDTO> listadoLibros;
+        listadoLibros = ldao.readAll();
+        clienteDTO libro = new clienteDTO();
+        Gson gson = new Gson();
+        String listadoJSON = "[";
+
+        for (int t = 0; t < listadoLibros.size(); t++) {
+          libro = (clienteDTO) listadoLibros.get(t);
+
+          listadoJSON += gson.toJson(libro) + ",";
+        }
+        listadoJSON = listadoJSON.substring(0, listadoJSON.length() - 1);
+        listadoJSON += "]";
+        // resp.enviarRespuestaDatos(200, resp.getInitPage("Hola Mundo !!!"));
+        Sout(gson.toJson((clienteDTO) lib));
+        PaginaInicio = resp.getInitPage(gson.toJson((clienteDTO) lib));
+        resp.imprimirSalida(resp.getHeader());
+        resp.imprimirSalida(listadoJSON); 
+
+        }
         
         if (hacer.trim().equalsIgnoreCase("Buscar")) {
           Sout("estoy en Buscar del Post");
-          clienteDTO cli = new clienteDTO();
+          clienteDTO clie = new clienteDTO();
           clienteDAO cdao = new clienteDAO();
           List<clienteDTO> listadoClientes;
           Gson gson = new Gson();
           String pp=req.getParametrosPost();
+          JsonObject postData = new JsonObject();
           if(pp!=null){
-        
+            postData = gson.fromJson(pp, JsonObject.class);
           }
           //listadoLibros = ldao.read(300);
           clienteDTO cliente = new clienteDTO();
-          cliente=cdao.read(300);
+          cliente.setDni(postData.get("dni").getAsString().replace("\"", ""));
+          cliente.setActividad(postData.get("actividad").getAsString().replace("\"", ""));
+          cliente=cdao.read(cliente);
+          
           String listadoJSON = "[";
 
          
@@ -184,8 +218,8 @@ public class adminSocket extends Thread {
           listadoJSON += "]";
           
           // resp.enviarRespuestaDatos(200, resp.getInitPage("Hola Mundo !!!"));
-          Sout(gson.toJson((clienteDTO) cli));
-          PaginaInicio = resp.getInitPage(gson.toJson((clienteDTO) cli));
+          Sout(gson.toJson((clienteDTO) clie));
+          PaginaInicio = resp.getInitPage(gson.toJson((clienteDTO) clie));
           resp.imprimirSalida(resp.getHeader());
           resp.imprimirSalida(listadoJSON);
         }  // no piden ninguna accion enviamos un archivo, por defecto es index.html

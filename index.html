@@ -63,7 +63,7 @@ select{
             </div>
           </div>
           <div class="row">
-            <form action="http://127.0.0.1:8866/Listar" method="GET" id="formulario">
+            <form action="http://127.0.0.1:8866/ListarPO" method="POST" id="formulario">
               <div class="row">
                 <div class="col-md-2">
                   <h2>
@@ -139,7 +139,7 @@ select{
               <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-6">
-                  <input type="submit" name="registrar" id="registrar" class="btn btn-primary" value="Registrar Socio" onclick="validarRegistro()">
+                  <input type="submit" name="registrar" id="registrar" class="btn btn-primary" value="Registrar Socio" onsubmit="validarRegistro()">
                 </div>
               </div>
             </form>

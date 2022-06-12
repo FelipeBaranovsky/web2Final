@@ -17,10 +17,10 @@ import util.Conexion;
  */
 public class clienteDAO implements intCRUD<clienteDTO> {
     public static final Conexion con = Conexion.crearConexion();
-    public static final String SQL_INSERT = "insert into cliente(idCliente,apellido,dni,actividad,dias,costo) values (?,?,?,?,?,?)";
-    public static final String SQL_DELETE = "delete from cliente where idCliente=?";
-    public static final String SQL_UPDATE = "update cliente set apellido=?,dni=?,actividad=?,dias=?,costo=? where idCliente=?";
-    public static final String SQL_READ = "select * from cliente where idCliente=?";
+    public static final String SQL_INSERT = "insert into cliente(dni,apellido,actividad,dias,costo) values (?,?,?,?,?)";
+    public static final String SQL_DELETE = "delete from cliente where dni=? AND actividad=?";
+    public static final String SQL_UPDATE = "update cliente set dni=?,apellido=?,actividad=?,dias=?,costo=? where dni=? AND actividad=? ";
+    public static final String SQL_READ = "select * from cliente where dni=? AND actividad=?";
     public static final String SQL_READALL = "select * from cliente";
 
     @Override
@@ -29,12 +29,11 @@ public class clienteDAO implements intCRUD<clienteDTO> {
         try {
             int control = 0;
             PreparedStatement ps = con.getCnn().prepareCall(SQL_INSERT);
-            ps.setInt(1, e.getCliente_id());
+            ps.setString(1, e.getDni());
             ps.setString(2, e.getApellido());
-            ps.setString(3, e.getDni());
-            ps.setString(4, e.getActividad());
-            ps.setInt(5, e.getDias());
-            ps.setFloat(6, e.getCosto());
+            ps.setString(3, e.getActividad());
+            ps.setInt(4, e.getDias());
+            ps.setFloat(5, e.getCosto());
 
             control = ps.executeUpdate();
             if (control > 0) {
@@ -75,12 +74,11 @@ public class clienteDAO implements intCRUD<clienteDTO> {
             int control = 0;
             PreparedStatement ps = con.getCnn().prepareCall(SQL_UPDATE);
 
-            ps.setString(1, e.getApellido());
-            ps.setString(2, e.getDni());
+            ps.setString(1, e.getDni());
+            ps.setString(2, e.getApellido());
             ps.setString(3, e.getActividad());
             ps.setInt(4, e.getDias());
             ps.setFloat(5, e.getCosto());
-            ps.setInt(6, e.getCliente_id());
             control = ps.executeUpdate();
             if (control > 0) {
                 return true;
@@ -95,21 +93,22 @@ public class clienteDAO implements intCRUD<clienteDTO> {
     }
 
     @Override
-    public clienteDTO read(Object clave) {
+    public clienteDTO read(clienteDTO clave) {
 
         clienteDTO cliente = null;
         try {
 
             ResultSet rs = null;
             PreparedStatement ps = con.getCnn().prepareCall(SQL_READ);
-            ps.setInt(1, (int) clave);
+            ps.setString(1, (String) clave.getDni());
+            ps.setString(2, (String) clave.getActividad());
 
             rs = ps.executeQuery();
             if (rs.next()) {
                 cliente = new clienteDTO();
-                cliente.setCliente_id(rs.getInt("idCliente"));
-                cliente.setApellido(rs.getString("apellido"));
+                
                 cliente.setDni(rs.getString("dni"));
+                cliente.setApellido(rs.getString("apellido"));
                 cliente.setActividad(rs.getString("actividad"));
                 cliente.setDias(rs.getInt("dias"));
                 cliente.setCosto(rs.getFloat("costo"));
@@ -139,9 +138,9 @@ public class clienteDAO implements intCRUD<clienteDTO> {
             while (rs.next()) {
 
                 cliente = new clienteDTO();
-                cliente.setCliente_id(rs.getInt("idCliente"));
-                cliente.setApellido(rs.getString("apellido"));
+                
                 cliente.setDni(rs.getString("dni"));
+                cliente.setApellido(rs.getString("apellido"));
                 cliente.setActividad(rs.getString("actividad"));
                 cliente.setDias(rs.getInt("dias"));
                 cliente.setCosto(rs.getFloat("costo"));
