@@ -143,14 +143,14 @@ public class adminSocket extends Thread {
           clienteDAO cdao = new clienteDAO();
           List<clienteDTO> listadoClientes;
           listadoClientes = cdao.readAll();
-          clienteDTO libro = new clienteDTO();
+          clienteDTO cliente = new clienteDTO();
           Gson gson = new Gson();
           String listadoJSON = "[";
 
           for (int t = 0; t < listadoClientes.size(); t++) {
-            libro = (clienteDTO) listadoClientes.get(t);
-
-            listadoJSON += gson.toJson(libro) + ",";
+            cliente = (clienteDTO) listadoClientes.get(t);
+            
+            listadoJSON += gson.toJson(cliente) + ",";
           }
           listadoJSON = listadoJSON.substring(0, listadoJSON.length() - 1);
           listadoJSON += "]";
@@ -169,7 +169,7 @@ public class adminSocket extends Thread {
           Gson gson = new Gson();
           String pp=req.getParametrosPost();
           if(pp!=null){
-          
+        
           }
           //listadoLibros = ldao.read(300);
           clienteDTO cliente = new clienteDTO();
@@ -196,7 +196,6 @@ public class adminSocket extends Thread {
             PaginaInicio += resp.getInitPage("hola desde el servidor IW2");
             resp.imprimirSalida(PaginaInicio);
           }
-        
         
         
         }

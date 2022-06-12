@@ -18,8 +18,8 @@ import util.Conexion;
 public class clienteDAO implements intCRUD<clienteDTO> {
     public static final Conexion con = Conexion.crearConexion();
     public static final String SQL_INSERT = "insert into cliente(idCliente,apellido,dni,actividad,dias,costo) values (?,?,?,?,?,?)";
-    public static final String SQL_DELETE = "delete from libro where idCliente=?";
-    public static final String SQL_UPDATE = "update libro set apellido=?,dni=?,actividad=?,dias=?,costo=? where idCliente=?";
+    public static final String SQL_DELETE = "delete from cliente where idCliente=?";
+    public static final String SQL_UPDATE = "update cliente set apellido=?,dni=?,actividad=?,dias=?,costo=? where idCliente=?";
     public static final String SQL_READ = "select * from cliente where idCliente=?";
     public static final String SQL_READALL = "select * from cliente";
 

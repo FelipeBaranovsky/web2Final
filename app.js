@@ -234,6 +234,8 @@ function registrarSocio(){
         }
     }
 
+    
+
 }
 function estaRepetido(dni,actividad){
     let socios = JSON.parse(localStorage.getItem('socios'));
@@ -318,4 +320,3 @@ function marcarVacio(id){
     let input = document.getElementById(id+"Advert");
     input.innerHTML = "Este campo es obligatorio";
 }
-
