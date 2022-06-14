@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.gym.adapters.repository.ClienteRepositoryMyBatis">
+    <select id="getAll" resultType="Cliente">
+        select * from cliente
+            order by idCliente desc;
+    </select>
+    <select id="getAllApellido" resultType="Cliente">
+        select * from cliente
+        order by apellido desc;
+    </select>
+    <select id="getAllDocumentos" resultType="Cliente">
+        select * from cliente
+        order by dni desc;
+    </select>
+    <select id="getAllActividades" resultType="Cliente">
+        select * from cliente
+        order by actividad desc;
+    </select>
+    <select id="insertCliente" parameterType="Cliente">
+        INSERT INTO `gymbd`.`cliente` (`apellido`, `dni`, `actividad`, `dias`, `costo`) VALUES (#{apellido}, #{dni}, #{actividad}, #{dias}, #{costo});
+    </select>
+    <select id="deleteCliente" parameterType="Cliente">
+        DELETE FROM `gymbd`.`cliente` WHERE (`dni` = #{dni} and `actividad` = #{actividad});
+    </select>
+    <select id="editCliente" parameterType="Cliente">
+        UPDATE `gymbd`.`cliente` SET `dni` = #{dni}, `actividad` = #{actividad},`apellido` = #{apellido},`dias` = #{dias},`costo` = #{costo} WHERE (`idCliente` = #{idCliente});
+    </select>
+
+</mapper>
